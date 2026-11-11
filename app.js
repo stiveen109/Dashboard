@@ -103,17 +103,23 @@ function iniciarMapa() {
   ).addTo(mapa);
 }
 
-function filtrar() {
-  const isla = document.getElementById("f-isla").value;
-  const minAptitud = Number(document.getElementById("f-aptitud").value);
-  const soloZonas = document.getElementById("f-zonas").checked;
-  document.getElementById("f-aptitud-val").textContent = minAptitud + "%";
+/* ---------- Filtros ---------- */
+function iniciarFiltros() {
+  const sel = document.getElementById("f-isla");
+  [...new Set(TODOS.map(d => d.isla))]
+    .sort((a, b) => a.localeCompare(b, "es"))
+    .forEach(isla => sel.insertAdjacentHTML("beforeend", `<option value="${isla}">${isla}</option>`));
 
-  return TODOS.filter(d =>
-    (isla === "todas" || d.isla === isla) &&
-    d.aptitud_sensor_pct >= minAptitud &&
-    (!soloZonas || d.zona_acumulacion)
+  ["f-isla", "f-aptitud", "f-zonas"].forEach(id =>
+    document.getElementById(id).addEventListener("input", actualizar)
   );
+
+  document.getElementById("f-reset").addEventListener("click", () => {
+    document.getElementById("f-isla").value = "todas";
+    document.getElementById("f-aptitud").value = 0;
+    document.getElementById("f-zonas").checked = false;
+    actualizar();
+  });
 }
 
 /* ---------- Actualización general ---------- */
