@@ -89,7 +89,7 @@ input[type="checkbox"] { accent-color: var(--rojo); margin-right: 6px; }
 .punto { display: inline-block; width: 12px; height: 12px; border-radius: 50%; margin-right: 6px; vertical-align: middle; }
 .punto.azul { background: var(--azul); }
 .punto.rojo { background: var(--rojo); }
-.punto.calor { background: linear-gradient(90deg, #3b82f6, #84cc16, #ef4444); width: 28px; border-radius: 6px; }
+.punto.calor { background: linear-gradient(90deg, #3b82f6, #22d3ee, #facc15, #f97316, #ef4444); width: 28px; border-radius: 6px; }
 .pulso-wrap { background: none; border: none; }
 .pulso {
   display: block; width: 16px; height: 16px; border-radius: 50%; background: var(--rojo);
@@ -100,6 +100,20 @@ input[type="checkbox"] { accent-color: var(--rojo); margin-right: 6px; }
   70% { box-shadow: 0 0 0 16px rgba(239, 68, 68, 0); }
   100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
 }
+
+/* Nombres de islas sobre el mapa */
+.etiqueta-isla {
+  background: rgba(8, 20, 36, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.75rem;
+  padding: 2px 9px;
+  border-radius: 999px;
+  box-shadow: none;
+}
+.etiqueta-isla::before { display: none; }
+.leaflet-control-layers { border-radius: 10px; font-size: 0.85rem; }
 
 /* Gráficos */
 .grid2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
@@ -129,20 +143,6 @@ footer { text-align: center; color: var(--suave); font-size: 0.8rem; padding: 24
 @media (max-width: 800px) {
   .pasos, .grid2 { grid-template-columns: 1fr; }
   .hero h1 { font-size: 2.1rem; }
-  #map { height: 360px; }
+  #map { height: 400px; }
   .chart-box { height: 280px; }
 }
-
-/* Nombres de islas sobre el mapa */
-.etiqueta-isla {
-  background: rgba(8, 20, 36, 0.7);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  color: #fff;
-  font-weight: 600;
-  font-size: 0.75rem;
-  padding: 2px 9px;
-  border-radius: 999px;
-  box-shadow: none;
-}
-.etiqueta-isla::before { display: none; }
-.leaflet-control-layers { border-radius: 10px; font-size: 0.85rem; }
