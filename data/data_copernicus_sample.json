@@ -1,0 +1,17 @@
+[
+  {"id": 1,  "fecha": "2026-08-05", "satelite": "Sentinel-2", "isla": "Santa Cruz",   "lat": -0.74, "lon": -90.31, "nubosidad_pct": 12, "aptitud_sensor_pct": 91, "indice_acumulacion": 35, "zona_acumulacion": false},
+  {"id": 2,  "fecha": "2026-08-10", "satelite": "Sentinel-2", "isla": "San Cristóbal","lat": -0.90, "lon": -89.62, "nubosidad_pct": 25, "aptitud_sensor_pct": 80, "indice_acumulacion": 48, "zona_acumulacion": false},
+  {"id": 3,  "fecha": "2026-08-15", "satelite": "Sentinel-2", "isla": "Isabela",      "lat": -0.95, "lon": -91.00, "nubosidad_pct": 40, "aptitud_sensor_pct": 62, "indice_acumulacion": 66, "zona_acumulacion": true},
+  {"id": 4,  "fecha": "2026-08-20", "satelite": "Sentinel-2", "isla": "Floreana",     "lat": -1.29, "lon": -90.43, "nubosidad_pct": 18, "aptitud_sensor_pct": 86, "indice_acumulacion": 52, "zona_acumulacion": false},
+  {"id": 5,  "fecha": "2026-08-25", "satelite": "Sentinel-2", "isla": "Fernandina",   "lat": -0.37, "lon": -91.55, "nubosidad_pct": 55, "aptitud_sensor_pct": 45, "indice_acumulacion": 30, "zona_acumulacion": false},
+  {"id": 6,  "fecha": "2026-08-30", "satelite": "Sentinel-2", "isla": "Española",     "lat": -1.37, "lon": -89.68, "nubosidad_pct": 8,  "aptitud_sensor_pct": 95, "indice_acumulacion": 72, "zona_acumulacion": true},
+  {"id": 7,  "fecha": "2026-09-04", "satelite": "Sentinel-2", "isla": "Santiago",     "lat": -0.23, "lon": -90.77, "nubosidad_pct": 33, "aptitud_sensor_pct": 70, "indice_acumulacion": 41, "zona_acumulacion": false},
+  {"id": 8,  "fecha": "2026-09-09", "satelite": "Sentinel-2", "isla": "Genovesa",     "lat": 0.32,  "lon": -89.95, "nubosidad_pct": 62, "aptitud_sensor_pct": 38, "indice_acumulacion": 22, "zona_acumulacion": false},
+  {"id": 9,  "fecha": "2026-09-14", "satelite": "Sentinel-2", "isla": "Santa Cruz",   "lat": -0.62, "lon": -90.35, "nubosidad_pct": 15, "aptitud_sensor_pct": 88, "indice_acumulacion": 58, "zona_acumulacion": false},
+  {"id": 10, "fecha": "2026-09-19", "satelite": "Sentinel-2", "isla": "Isabela",      "lat": -1.20, "lon": -91.10, "nubosidad_pct": 48, "aptitud_sensor_pct": 55, "indice_acumulacion": 74, "zona_acumulacion": true},
+  {"id": 11, "fecha": "2026-09-24", "satelite": "Sentinel-2", "isla": "San Cristóbal","lat": -0.82, "lon": -89.45, "nubosidad_pct": 22, "aptitud_sensor_pct": 82, "indice_acumulacion": 63, "zona_acumulacion": true},
+  {"id": 12, "fecha": "2026-09-29", "satelite": "Sentinel-2", "isla": "Floreana",     "lat": -1.25, "lon": -90.50, "nubosidad_pct": 70, "aptitud_sensor_pct": 30, "indice_acumulacion": 45, "zona_acumulacion": false},
+  {"id": 13, "fecha": "2026-10-04", "satelite": "Sentinel-2", "isla": "Española",     "lat": -1.40, "lon": -89.60, "nubosidad_pct": 10, "aptitud_sensor_pct": 93, "indice_acumulacion": 78, "zona_acumulacion": true},
+  {"id": 14, "fecha": "2026-10-09", "satelite": "Sentinel-2", "isla": "Baltra",       "lat": -0.45, "lon": -90.27, "nubosidad_pct": 28, "aptitud_sensor_pct": 76, "indice_acumulacion": 37, "zona_acumulacion": false},
+  {"id": 15, "fecha": "2026-10-14", "satelite": "Sentinel-2", "isla": "Isabela",      "lat": -0.80, "lon": -91.30, "nubosidad_pct": 36, "aptitud_sensor_pct": 66, "indice_acumulacion": 69, "zona_acumulacion": true}
+]

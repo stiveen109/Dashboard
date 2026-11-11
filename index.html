@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PlasTrack - Dashboard</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>PlasTrack</h1>
+    <p>Monitoreo satelital de acumulación de plásticos en Galápagos · Datos simulados tipo Copernicus</p>
+  </header>
+
+  <main>
+    <section class="kpis" id="kpis"></section>
+
+    <section class="card">
+      <h2>Mapa de pasadas satelitales</h2>
+      <div id="map"></div>
+      <p class="leyenda">
+        <span class="punto azul"></span> Pasada normal
+        <span class="punto rojo"></span> Zona de acumulación (índice ≥ 60)
+      </p>
+    </section>
+
+    <section class="card">
+      <h2>Nubosidad y aptitud del sensor por fecha</h2>
+      <div class="chart-box"><canvas id="grafico"></canvas></div>
+    </section>
+  </main>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+  <script src="app.js"></script>
+</body>
+</html>
