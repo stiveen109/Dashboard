@@ -5,6 +5,18 @@ Chart.defaults.color = "#cfe0f5";
 Chart.defaults.borderColor = "rgba(255,255,255,0.08)";
 Chart.defaults.font.family = "'Segoe UI', system-ui, Arial, sans-serif";
 
+const ISLAS = {
+  "Isabela": [-0.85, -91.1],
+  "Fernandina": [-0.37, -91.55],
+  "Santiago": [-0.23, -90.77],
+  "Santa Cruz": [-0.63, -90.35],
+  "Baltra": [-0.45, -90.28],
+  "Floreana": [-1.29, -90.43],
+  "San Cristóbal": [-0.85, -89.45],
+  "Española": [-1.37, -89.68],
+  "Genovesa": [0.32, -89.95]
+};
+
 let TODOS = [];
 let mapa, capaPasadas, capaZonas, capaCalor;
 let marcadores = {};
@@ -47,62 +59,6 @@ function animarNumeros() {
   });
 }
 
-const ISLAS = {
-  "Isabela": [-0.85, -91.1],
-  "Fernandina": [-0.37, -91.55],
-  "Santiago": [-0.23, -90.77],
-  "Santa Cruz": [-0.63, -90.35],
-  "Baltra": [-0.45, -90.28],
-  "Floreana": [-1.29, -90.43],
-  "San Cristóbal": [-0.85, -89.45],
-  "Española": [-1.37, -89.68],
-  "Genovesa": [0.32, -89.95]
-};
-
-function iniciarMapa() {
-  mapa = L.map("map", { scrollWheelZoom: false, zoomSnap: 0.25 });
-  mapa.setView([-0.7, -90.6], 8);
-
-  const satelite = L.tileLayer(
-    "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
-    { attribution: "Imágenes © Esri, Maxar, Earthstar Geographics y la comunidad GIS", maxZoom: 17 }
-  );
-  const claro = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-    attribution: "&copy; OpenStreetMap"
-  });
-  const oscuro = L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png", {
-    attribution: "&copy; OpenStreetMap &copy; CARTO", subdomains: "abcd", maxZoom: 19
-  });
-  satelite.addTo(mapa);
-
-  capaPasadas = L.layerGroup().addTo(mapa);
-  capaZonas = L.layerGroup().addTo(mapa);
-  capaCalor = L.heatLayer([], {
-    radius: 38, blur: 28, minOpacity: 0.4,
-    gradient: { 0.2: "#3b82f6", 0.45: "#22d3ee", 0.65: "#facc15", 0.85: "#f97316", 1: "#ef4444" }
-  }).addTo(mapa);
-
-  const capaNombres = L.layerGroup().addTo(mapa);
-  Object.entries(ISLAS).forEach(([nombre, [lat, lon]]) => {
-    L.marker([lat, lon], { opacity: 0, interactive: false })
-      .bindTooltip(nombre, { permanent: true, direction: "center", className: "etiqueta-isla" })
-      .addTo(capaNombres);
-  });
-
-  L.control.scale({ imperial: false }).addTo(mapa);
-
-  L.control.layers(
-    { "🛰️ Satélite": satelite, "🗺️ Mapa claro": claro, "🌑 Mapa oscuro": oscuro },
-    {
-      "🏝️ Nombres de islas": capaNombres,
-      "📍 Pasadas satelitales": capaPasadas,
-      "🚨 Zonas de acumulación": capaZonas,
-      "🔥 Mapa de calor (índice)": capaCalor
-    },
-    { collapsed: false }
-  ).addTo(mapa);
-}
-
 /* ---------- Filtros ---------- */
 function iniciarFiltros() {
   const sel = document.getElementById("f-isla");
@@ -120,6 +76,19 @@ function iniciarFiltros() {
     document.getElementById("f-zonas").checked = false;
     actualizar();
   });
+}
+
+function filtrar() {
+  const isla = document.getElementById("f-isla").value;
+  const minAptitud = Number(document.getElementById("f-aptitud").value);
+  const soloZonas = document.getElementById("f-zonas").checked;
+  document.getElementById("f-aptitud-val").textContent = minAptitud + "%";
+
+  return TODOS.filter(d =>
+    (isla === "todas" || d.isla === isla) &&
+    d.aptitud_sensor_pct >= minAptitud &&
+    (!soloZonas || d.zona_acumulacion)
+  );
 }
 
 /* ---------- Actualización general ---------- */
@@ -185,27 +154,44 @@ function crearKPIs(datos) {
 
 /* ---------- Mapa ---------- */
 function iniciarMapa() {
-  mapa = L.map("map", { scrollWheelZoom: false });
+  mapa = L.map("map", { scrollWheelZoom: false, zoomSnap: 0.25 });
   mapa.setView([-0.7, -90.6], 8);
 
-  const oscuro = L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png", {
-    attribution: "&copy; OpenStreetMap &copy; CARTO", subdomains: "abcd", maxZoom: 19
-  });
+  const satelite = L.tileLayer(
+    "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+    { attribution: "Imágenes © Esri, Maxar, Earthstar Geographics y la comunidad GIS", maxZoom: 17 }
+  );
   const claro = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
     attribution: "&copy; OpenStreetMap"
   });
-  oscuro.addTo(mapa);
+  const oscuro = L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png", {
+    attribution: "&copy; OpenStreetMap &copy; CARTO", subdomains: "abcd", maxZoom: 19
+  });
+  satelite.addTo(mapa);
 
   capaPasadas = L.layerGroup().addTo(mapa);
   capaZonas = L.layerGroup().addTo(mapa);
-  capaCalor = L.heatLayer([], { radius: 35, blur: 25, minOpacity: 0.35 }).addTo(mapa);
+  capaCalor = L.heatLayer([], {
+    radius: 38, blur: 28, minOpacity: 0.4,
+    gradient: { 0.2: "#3b82f6", 0.45: "#22d3ee", 0.65: "#facc15", 0.85: "#f97316", 1: "#ef4444" }
+  }).addTo(mapa);
+
+  const capaNombres = L.layerGroup().addTo(mapa);
+  Object.entries(ISLAS).forEach(([nombre, [lat, lon]]) => {
+    L.marker([lat, lon], { opacity: 0, interactive: false })
+      .bindTooltip(nombre, { permanent: true, direction: "center", className: "etiqueta-isla" })
+      .addTo(capaNombres);
+  });
+
+  L.control.scale({ imperial: false }).addTo(mapa);
 
   L.control.layers(
-    { "Mapa oscuro": oscuro, "Mapa claro": claro },
+    { "🛰️ Satélite": satelite, "🗺️ Mapa claro": claro, "🌑 Mapa oscuro": oscuro },
     {
-      "Pasadas satelitales": capaPasadas,
-      "Zonas de acumulación": capaZonas,
-      "Mapa de calor (índice)": capaCalor
+      "🏝️ Nombres de islas": capaNombres,
+      "📍 Pasadas satelitales": capaPasadas,
+      "🚨 Zonas de acumulación": capaZonas,
+      "🔥 Mapa de calor (índice)": capaCalor
     },
     { collapsed: false }
   ).addTo(mapa);
@@ -230,6 +216,7 @@ function actualizarMapa(datos) {
           icon: L.divIcon({ className: "pulso-wrap", html: '<span class="pulso"></span>', iconSize: [16, 16] })
         })
       : L.circleMarker([d.lat, d.lon], { radius: 8, color: "#ffffff", weight: 2, fillColor: color, fillOpacity: 0.95 });
+
     marcador
       .addTo(capaPasadas)
       .bindPopup(
