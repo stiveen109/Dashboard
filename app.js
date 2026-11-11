@@ -36,24 +36,38 @@ function crearMapa(datos) {
     attribution: "&copy; OpenStreetMap"
   }).addTo(mapa);
 
+  const capaPasadas = L.layerGroup().addTo(mapa);
+  const capaZonas = L.layerGroup().addTo(mapa);
   const puntos = [];
+
   datos.forEach(d => {
     const color = d.zona_acumulacion ? "#ef4444" : "#3b82f6";
     puntos.push([d.lat, d.lon]);
 
-    // Halo grande para las zonas de acumulación
     if (d.zona_acumulacion) {
-      L.circle([d.lat, d.lon], { radius: 15000, color, fillColor: color, fillOpacity: 0.2, weight: 1 }).addTo(mapa);
+      L.circle([d.lat, d.lon], { radius: 15000, color, fillColor: color, fillOpacity: 0.2, weight: 1 }).addTo(capaZonas);
     }
 
     L.circleMarker([d.lat, d.lon], { radius: 8, color, fillColor: color, fillOpacity: 0.9 })
-      .addTo(mapa)
+      .addTo(capaPasadas)
       .bindPopup(
         `<b>${d.isla}</b><br>Fecha: ${d.fecha}<br>Satélite: ${d.satelite}<br>` +
         `Nubosidad: ${d.nubosidad_pct}%<br>Aptitud: ${d.aptitud_sensor_pct}%<br>` +
         `Índice de acumulación: ${d.indice_acumulacion}`
       );
   });
+
+  // Mapa de calor: la intensidad es el índice de acumulación (0 a 1)
+  const capaCalor = L.heatLayer(
+    datos.map(d => [d.lat, d.lon, d.indice_acumulacion / 100]),
+    { radius: 35, blur: 25, minOpacity: 0.35 }
+  ).addTo(mapa);
+
+  L.control.layers(null, {
+    "Pasadas satelitales": capaPasadas,
+    "Zonas de acumulación": capaZonas,
+    "Mapa de calor (índice)": capaCalor
+  }, { collapsed: false }).addTo(mapa);
 
   mapa.fitBounds(puntos, { padding: [30, 30] });
 }
