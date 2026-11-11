@@ -8,28 +8,92 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
-    <h1>PlasTrack</h1>
-    <p>Monitoreo satelital de acumulación de plásticos en Galápagos · Datos simulados tipo Copernicus</p>
+  <header class="hero">
+    <span class="badge">Prototipo · Datos simulados tipo Copernicus</span>
+    <h1>🛰️ PlasTrack</h1>
+    <p class="lema">
+      Un tablero que usa datos de satélite para mostrar <b>dónde se acumula el plástico</b>
+      en las islas Galápagos y <b>qué tan confiables</b> son esas mediciones.
+    </p>
   </header>
 
   <main>
+    <section class="pasos">
+      <div class="paso"><span class="num">1</span>
+        <div><h3>🛰️ El satélite pasa</h3>
+        <p>Sentinel-2 sobrevuela las islas y toma datos. <b>Cada punto del mapa es una pasada.</b></p></div>
+      </div>
+      <div class="paso"><span class="num">2</span>
+        <div><h3>☁️ Revisamos la calidad</h3>
+        <p>Con muchas nubes el sensor no ve el mar. <b>Aptitud baja = dato poco confiable.</b></p></div>
+      </div>
+      <div class="paso"><span class="num">3</span>
+        <div><h3>🔴 Detectamos plástico</h3>
+        <p>Si el índice de acumulación es 60 o más, es una <b>zona crítica</b>: ahí se debe intervenir.</p></div>
+      </div>
+    </section>
+
+    <section class="card filtros">
+      <div class="filtro">
+        <label for="f-isla">🏝️ Isla</label>
+        <select id="f-isla"><option value="todas">Todas las islas</option></select>
+      </div>
+      <div class="filtro">
+        <label for="f-aptitud">📡 Aptitud mínima del sensor: <b id="f-aptitud-val">0%</b></label>
+        <input type="range" id="f-aptitud" min="0" max="100" step="5" value="0">
+      </div>
+      <div class="filtro check">
+        <label><input type="checkbox" id="f-zonas"> 🚨 Solo zonas críticas</label>
+      </div>
+      <button id="f-reset" type="button">↺ Limpiar filtros</button>
+      <p class="sub full">Mueve los filtros y todo el tablero se actualiza.</p>
+    </section>
+
     <section class="kpis" id="kpis"></section>
 
     <section class="card">
-      <h2>Mapa de pasadas satelitales</h2>
+      <h2>🗺️ ¿Dónde está el problema?</h2>
+      <p class="sub">Haz clic en un punto para ver sus datos. Usa el panel del mapa para encender o apagar capas.</p>
       <div id="map"></div>
-      <p class="leyenda">
-        <span class="punto azul"></span> Pasada normal
-        <span class="punto rojo"></span> Zona de acumulación (índice ≥ 60)
-      </p>
+      <div class="leyenda">
+        <span><i class="punto azul"></i> Pasada normal</span>
+        <span><i class="punto rojo"></i> Zona crítica (índice ≥ 60)</span>
+        <span><i class="punto calor"></i> Mapa de calor: más intenso = más acumulación</span>
+      </div>
     </section>
 
+    <section class="grid2">
+      <div class="card">
+        <h2>📈 ¿Qué tan confiables son los datos?</h2>
+        <p class="sub">Cuando sube la nubosidad, baja la aptitud del sensor. Las barras muestran el índice de acumulación.</p>
+        <div class="chart-box"><canvas id="grafico"></canvas></div>
+      </div>
+      <div class="card">
+        <h2>🏝️ ¿Qué isla está peor?</h2>
+        <p class="sub">Índice máximo de acumulación por isla. En rojo, las que superan el umbral crítico.</p>
+        <div class="chart-box"><canvas id="graficoIslas"></canvas></div>
+      </div>
+    </section>
+
+    <section class="card insight" id="insight"></section>
+
     <section class="card">
-      <h2>Nubosidad y aptitud del sensor por fecha</h2>
-      <div class="chart-box"><canvas id="grafico"></canvas></div>
+      <h2>🏆 Ranking de pasadas con más acumulación</h2>
+      <p class="sub">Haz clic en una fila para ir a ese punto en el mapa.</p>
+      <div class="tabla-wrap">
+        <table>
+          <thead>
+            <tr><th>#</th><th>Isla</th><th>Fecha</th><th>Índice</th><th>Estado</th><th>Aptitud</th><th>Calidad del dato</th></tr>
+          </thead>
+          <tbody id="tabla-body"></tbody>
+        </table>
+      </div>
     </section>
   </main>
+
+  <footer>
+    Proyecto académico · Universidad Técnica de Cotopaxi · Los datos son simulados con fines educativos
+  </footer>
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="https://unpkg.com/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
