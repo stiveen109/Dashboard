@@ -8,9 +8,70 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <svg class="iconos-definicion" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+    <symbol id="icon-satellite" viewBox="0 0 24 24">
+      <path d="m13.5 6.5 4 4M6.5 13.5l4 4M8 8l8 8M3 21l6-6M15 9l6-6M5 5l4 4M15 15l4 4M3 3l6 1-5 5-1-6ZM21 21l-6-1 5-5 1 6Z"/>
+    </symbol>
+    <symbol id="icon-cloud" viewBox="0 0 24 24">
+      <path d="M20 16.2A4.5 4.5 0 0 0 18.5 7.5h-1.1A7 7 0 0 0 4 10a4 4 0 0 0 .5 8H18a3.5 3.5 0 0 0 2-1.8Z"/>
+    </symbol>
+    <symbol id="icon-alert" viewBox="0 0 24 24">
+      <path d="m10.3 4.3-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.7-2.7l-8-14a2 2 0 0 0-3.4 0Z"/>
+      <path d="M12 9v4m0 4h.01"/>
+    </symbol>
+    <symbol id="icon-pin" viewBox="0 0 24 24">
+      <path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z"/>
+      <circle cx="12" cy="10" r="2.5"/>
+    </symbol>
+    <symbol id="icon-radio" viewBox="0 0 24 24">
+      <path d="M12 19v3m-7-3h14M5 16l14-8M8 5a8 8 0 0 1 11 3M5 2a13 13 0 0 1 18 5"/>
+      <circle cx="5" cy="16" r="2"/>
+    </symbol>
+    <symbol id="icon-refresh" viewBox="0 0 24 24">
+      <path d="M20 7v5h-5M4 17v-5h5"/>
+      <path d="M5.6 9A7 7 0 0 1 18 6l2 6M4 12l2 6a7 7 0 0 0 12.4-3"/>
+    </symbol>
+    <symbol id="icon-map" viewBox="0 0 24 24">
+      <path d="m3 6 6-3 6 3 6-3v15l-6 3-6-3-6 3V6Z"/>
+      <path d="M9 3v15m6-12v15"/>
+    </symbol>
+    <symbol id="icon-moon" viewBox="0 0 24 24">
+      <path d="M20.9 13A9 9 0 0 1 11 3.1 9 9 0 1 0 20.9 13Z"/>
+    </symbol>
+    <symbol id="icon-chart" viewBox="0 0 24 24">
+      <path d="M3 3v18h18M18 17V9m-5 8V5m-5 12v-5"/>
+    </symbol>
+    <symbol id="icon-award" viewBox="0 0 24 24">
+      <circle cx="12" cy="8" r="6"/>
+      <path d="m8.2 13-1.2 9 5-3 5 3-1.2-9"/>
+    </symbol>
+    <symbol id="icon-lightbulb" viewBox="0 0 24 24">
+      <path d="M9 18h6m-5 4h4m-2-20a7 7 0 0 0-4 12.7c.6.4 1 1.3 1 2.3h6c0-1 .4-1.9 1-2.3A7 7 0 0 0 12 2Z"/>
+    </symbol>
+    <symbol id="icon-calendar" viewBox="0 0 24 24">
+      <rect x="3" y="5" width="18" height="16" rx="2"/>
+      <path d="M16 3v4M8 3v4M3 11h18"/>
+    </symbol>
+    <symbol id="icon-flask" viewBox="0 0 24 24">
+      <path d="M9 3h6m-5 0v7l-6.5 9.5A1.7 1.7 0 0 0 5 22h14a1.7 1.7 0 0 0 1.5-2.5L14 10V3"/>
+      <path d="M7 16h10"/>
+    </symbol>
+    <symbol id="icon-check" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="10"/>
+      <path d="m8 12 2.5 2.5L16 9"/>
+    </symbol>
+    <symbol id="icon-warning" viewBox="0 0 24 24">
+      <path d="m10.3 4.3-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.7-2.7l-8-14a2 2 0 0 0-3.4 0Z"/>
+      <path d="M12 9v4m0 4h.01"/>
+    </symbol>
+    <symbol id="icon-search" viewBox="0 0 24 24">
+      <circle cx="11" cy="11" r="7"/>
+      <path d="m20 20-4-4"/>
+    </symbol>
+  </svg>
   <header class="hero">
     <span class="badge">Prototipo · Datos simulados tipo Copernicus</span>
-    <h1>🛰️ PlasTrack</h1>
+    <h1><svg class="icon icon-logo" aria-hidden="true"><use href="#icon-satellite"></use></svg> PlasTrack</h1>
     <p class="lema">
       Un tablero que usa datos de satélite para mostrar <b>dónde se acumula el plástico</b>
       en las islas Galápagos y <b>qué tan confiables</b> son esas mediciones.
@@ -20,39 +81,39 @@
   <main>
     <section class="pasos">
       <div class="paso"><span class="num">1</span>
-        <div><h3>🛰️ El satélite pasa</h3>
+        <div><h3><svg class="icon" aria-hidden="true"><use href="#icon-satellite"></use></svg> El satélite pasa</h3>
         <p>Sentinel-2 sobrevuela las islas y toma datos. <b>Cada punto del mapa es una pasada.</b></p></div>
       </div>
       <div class="paso"><span class="num">2</span>
-        <div><h3>☁️ Revisamos la calidad</h3>
+        <div><h3><svg class="icon" aria-hidden="true"><use href="#icon-cloud"></use></svg> Revisamos la calidad</h3>
         <p>Con muchas nubes el sensor no ve el mar. <b>Aptitud baja = dato poco confiable.</b></p></div>
       </div>
       <div class="paso"><span class="num">3</span>
-        <div><h3>🔴 Detectamos plástico</h3>
+        <div><h3><svg class="icon icon-rojo" aria-hidden="true"><use href="#icon-alert"></use></svg> Detectamos plástico</h3>
         <p>Si el índice de acumulación es 60 o más, es una <b>zona crítica</b>: ahí se debe intervenir.</p></div>
       </div>
     </section>
 
     <section class="card filtros">
       <div class="filtro">
-        <label for="f-isla">🏝️ Isla</label>
+        <label for="f-isla"><svg class="icon" aria-hidden="true"><use href="#icon-pin"></use></svg> Isla</label>
         <select id="f-isla"><option value="todas">Todas las islas</option></select>
       </div>
       <div class="filtro">
-        <label for="f-aptitud">📡 Aptitud mínima del sensor: <b id="f-aptitud-val">0%</b></label>
+        <label for="f-aptitud"><svg class="icon" aria-hidden="true"><use href="#icon-radio"></use></svg> Aptitud mínima del sensor: <b id="f-aptitud-val">0%</b></label>
         <input type="range" id="f-aptitud" min="0" max="100" step="5" value="0">
       </div>
       <div class="filtro check">
-        <label><input type="checkbox" id="f-zonas"> 🚨 Solo zonas críticas</label>
+        <label><input type="checkbox" id="f-zonas"><svg class="icon icon-rojo" aria-hidden="true"><use href="#icon-alert"></use></svg> Solo zonas críticas</label>
       </div>
-      <button id="f-reset" type="button">↺ Limpiar filtros</button>
+      <button id="f-reset" type="button"><svg class="icon" aria-hidden="true"><use href="#icon-refresh"></use></svg> Limpiar filtros</button>
       <p class="sub full">Mueve los filtros y todo el tablero se actualiza.</p>
     </section>
 
     <section class="kpis" id="kpis"></section>
 
     <section class="card">
-      <h2>🗺️ ¿Dónde está el problema?</h2>
+      <h2><svg class="icon" aria-hidden="true"><use href="#icon-map"></use></svg> ¿Dónde está el problema?</h2>
       <p class="sub">Haz clic en un punto para ver sus datos. Usa el panel del mapa para encender o apagar capas.</p>
       <div id="map"></div>
       <div class="leyenda">
@@ -64,12 +125,12 @@
 
     <section class="grid2">
       <div class="card">
-        <h2>📈 ¿Qué tan confiables son los datos?</h2>
+        <h2><svg class="icon" aria-hidden="true"><use href="#icon-chart"></use></svg> ¿Qué tan confiables son los datos?</h2>
         <p class="sub">Cuando sube la nubosidad, baja la aptitud del sensor. Las barras muestran el índice de acumulación.</p>
         <div class="chart-box"><canvas id="grafico"></canvas></div>
       </div>
       <div class="card">
-        <h2>🏝️ ¿Qué isla está peor?</h2>
+        <h2><svg class="icon" aria-hidden="true"><use href="#icon-pin"></use></svg> ¿Qué isla está peor?</h2>
         <p class="sub">Índice máximo de acumulación por isla. En rojo, las que superan el umbral crítico.</p>
         <div class="chart-box"><canvas id="graficoIslas"></canvas></div>
       </div>
@@ -78,7 +139,7 @@
     <section class="card insight" id="insight"></section>
 
     <section class="card">
-      <h2>🏆 Ranking de pasadas con más acumulación</h2>
+      <h2><svg class="icon" aria-hidden="true"><use href="#icon-award"></use></svg> Ranking de pasadas con más acumulación</h2>
       <p class="sub">Haz clic en una fila para ir a ese punto en el mapa.</p>
       <div class="tabla-wrap">
         <table>

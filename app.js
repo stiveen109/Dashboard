@@ -42,6 +42,10 @@ function promedio(arr, campo) {
   return arr.reduce((s, d) => s + d[campo], 0) / arr.length;
 }
 
+function icono(nombre) {
+  return `<svg class="icon" aria-hidden="true"><use href="#icon-${nombre}"></use></svg>`;
+}
+
 function animarNumeros() {
   document.querySelectorAll("[data-num]").forEach(el => {
     const fin = parseFloat(el.dataset.num);
@@ -107,7 +111,7 @@ function actualizar() {
 
 function mostrarVacio() {
   document.getElementById("kpis").innerHTML =
-    `<div class="card vacio">😕 No hay pasadas con estos filtros. Prueba bajar la aptitud mínima o limpiar los filtros.</div>`;
+    `<div class="card vacio">${icono("search")} No hay pasadas con estos filtros. Prueba bajar la aptitud mínima o limpiar los filtros.</div>`;
   capaPasadas.clearLayers();
   capaZonas.clearLayers();
   capaCalor.setLatLngs([]);
@@ -124,22 +128,22 @@ function crearKPIs(datos) {
   const mayor = datos.reduce((a, b) => (b.indice_acumulacion > a.indice_acumulacion ? b : a));
 
   const kpis = [
-    { icono: "🛰️", titulo: "Pasadas del satélite", num: datos.length, dec: 0, suf: "", color: "#3b82f6",
+    { icono: "satellite", titulo: "Pasadas del satélite", num: datos.length, dec: 0, suf: "", color: "#3b82f6",
       ayuda: "Veces que el satélite pasó y tomó datos" },
-    { icono: "☁️", titulo: "Nubosidad promedio", num: promedio(datos, "nubosidad_pct"), dec: 1, suf: "%", color: "#f59e0b",
+    { icono: "cloud", titulo: "Nubosidad promedio", num: promedio(datos, "nubosidad_pct"), dec: 1, suf: "%", color: "#f59e0b",
       ayuda: "Porcentaje medio del cielo tapado por nubes" },
-    { icono: "📡", titulo: "Aptitud del sensor", num: promedio(datos, "aptitud_sensor_pct"), dec: 1, suf: "%", color: "#2fb5a5",
+    { icono: "radio", titulo: "Aptitud del sensor", num: promedio(datos, "aptitud_sensor_pct"), dec: 1, suf: "%", color: "#2fb5a5",
       ayuda: "Qué tan utilizable fue la captura, en promedio" },
-    { icono: "🚨", titulo: "Zonas críticas", num: zonas, dec: 0, suf: "", color: "#ef4444",
+    { icono: "alert", titulo: "Zonas críticas", num: zonas, dec: 0, suf: "", color: "#ef4444",
       ayuda: "Pasadas con índice de acumulación ≥ 60" },
-    { icono: "📍", titulo: "Isla más afectada",
+    { icono: "pin", titulo: "Isla más afectada",
       texto: `${mayor.isla} <small>(${mayor.indice_acumulacion})</small>`, color: "#a78bfa",
       ayuda: "Isla con el mayor índice de acumulación" }
   ];
 
   document.getElementById("kpis").innerHTML = kpis.map(k => `
     <div class="kpi" style="--acento:${k.color}">
-      <div class="kpi-icono">${k.icono}</div>
+      <div class="kpi-icono">${icono(k.icono)}</div>
       <div class="kpi-info">
         <div class="titulo">${k.titulo}</div>
         ${k.texto
@@ -186,12 +190,16 @@ function iniciarMapa() {
   L.control.scale({ imperial: false }).addTo(mapa);
 
   L.control.layers(
-    { "🛰️ Satélite": satelite, "🗺️ Mapa claro": claro, "🌑 Mapa oscuro": oscuro },
     {
-      "🏝️ Nombres de islas": capaNombres,
-      "📍 Pasadas satelitales": capaPasadas,
-      "🚨 Zonas de acumulación": capaZonas,
-      "🔥 Mapa de calor (índice)": capaCalor
+      [`${icono("satellite")} Satélite`]: satelite,
+      [`${icono("map")} Mapa claro`]: claro,
+      [`${icono("moon")} Mapa oscuro`]: oscuro
+    },
+    {
+      [`${icono("pin")} Nombres de islas`]: capaNombres,
+      [`${icono("satellite")} Pasadas satelitales`]: capaPasadas,
+      [`${icono("alert")} Zonas de acumulación`]: capaZonas,
+      [`${icono("chart")} Mapa de calor (índice)`]: capaCalor
     },
     { collapsed: false }
   ).addTo(mapa);
@@ -220,11 +228,11 @@ function actualizarMapa(datos) {
     marcador
       .addTo(capaPasadas)
       .bindPopup(
-        `<b>${d.isla}</b> · ${critica ? "🔴 Zona crítica" : "🔵 Normal"}<br>` +
-        `📅 ${d.fecha} · 🛰️ ${d.satelite}<br>` +
-        `☁️ Nubosidad: ${d.nubosidad_pct}%<br>` +
-        `📡 Aptitud: ${d.aptitud_sensor_pct}%<br>` +
-        `🧪 Índice de acumulación: <b>${d.indice_acumulacion}</b>`
+        `<b>${d.isla}</b> · ${icono(critica ? "alert" : "check")} ${critica ? "Zona crítica" : "Normal"}<br>` +
+        `${icono("calendar")} ${d.fecha} · ${icono("satellite")} ${d.satelite}<br>` +
+        `${icono("cloud")} Nubosidad: ${d.nubosidad_pct}%<br>` +
+        `${icono("radio")} Aptitud: ${d.aptitud_sensor_pct}%<br>` +
+        `${icono("flask")} Índice de acumulación: <b>${d.indice_acumulacion}</b>`
       );
 
     marcadores[d.id] = marcador;
@@ -311,7 +319,7 @@ function crearInsight(datos) {
   const fiables = criticas.filter(d => d.aptitud_sensor_pct >= APTITUD_CONFIABLE);
 
   document.getElementById("insight").innerHTML = `
-    <h2>💡 ¿Qué nos dice esto?</h2>
+    <h2>${icono("lightbulb")} ¿Qué nos dice esto?</h2>
     Con los filtros actuales hay <b>${datos.length}</b> pasadas. De ellas, <b>${criticas.length}</b> detectan
     zonas críticas y <b>${fiables.length}</b> tienen datos confiables (aptitud ≥ ${APTITUD_CONFIABLE}%), así que
     ahí se puede decidir con seguridad. La isla más afectada es <b>${mayor.isla}</b> (índice ${mayor.indice_acumulacion}).
@@ -334,7 +342,7 @@ function crearTabla(datos) {
         <td><span class="barra"><span style="width:${d.indice_acumulacion}%;background:${color}"></span></span>${d.indice_acumulacion}</td>
         <td><span class="tag ${d.zona_acumulacion ? "rojo" : "azul"}">${d.zona_acumulacion ? "Crítica" : "Normal"}</span></td>
         <td>${d.aptitud_sensor_pct}%</td>
-        <td>${fiable ? "✅ Confiable" : "⚠️ Poco confiable"}</td>
+        <td><span class="calidad ${fiable ? "confiable" : "poco-confiable"}">${icono(fiable ? "check" : "warning")} ${fiable ? "Confiable" : "Poco confiable"}</span></td>
       </tr>`;
   }).join("");
 
